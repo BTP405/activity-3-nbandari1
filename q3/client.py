@@ -2,13 +2,16 @@ import socket
 import pickle
 import threading
 
-def receive_messages():
+def recv_messages():
+    """ Function handles receving messages from server """
     try:
         while True:
+            #receives pickled message from server
             pickled_message = client_socket.recv(4096)
+            #check if message is not empty
             if not pickled_message:
                 break
-              
+            #unpickle message 
             message = pickle.loads(pickled_message)
             print(message)
           
@@ -16,9 +19,11 @@ def receive_messages():
         print(f"Error receiving messages: {e}")
 
 def send_message():
+    """ Function handles sending messages to server """
     try:
         while True:
             message = input("Enter your message: ")
+            #pickling the input message
             pickled_message = pickle.dumps(message)
             client_socket.sendall(pickled_message)
           
