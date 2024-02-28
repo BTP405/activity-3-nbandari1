@@ -20,7 +20,7 @@ def main():
   server_host = '127.0.0.1'
   server_port = 12345
   buffer_seize = 4096
-
+  #create socket object for client
   client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
   try:
     client_socket.connect((server_host, server_port))
@@ -28,12 +28,17 @@ def main():
     print("ERROR connecting to server: ", error)
     return
   try:
+    #get file path from user
     file_path = input("Enter path: ")
+    #check if file exists
     if not os.path.exists(file_path):
       print("File not found")
       return
+    #load file data
     file_data = load_file(file_path)
+    #pickle file data to serialize it
     serialized_data = pickle.dumps(file_data)
+    #send the pickled data to server
     client_socket.sendall(serialized_data)
     print("File sent successfully!")
   except Exception as error:
