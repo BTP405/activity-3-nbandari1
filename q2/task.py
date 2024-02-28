@@ -1,4 +1,4 @@
-# Define a task function to multiply two numbers
-def task_multiply(x, y):
-    """ Perform multiplication of two numbers """
-    return x * y
+# Define a task function to divide two numbers
+def task_divide(x, y):
+    """ Perform division of two numbers """
+    return x / y
