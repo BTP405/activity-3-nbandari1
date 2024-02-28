@@ -7,13 +7,19 @@ def distribute_task(task, arg, worker_address):
     results = []
     for address in worker_address:
         try:
+            #create socket connection to the worker node
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client_socket:
-                client_socket.settimeout(5)  # Set timeout for connection
+                #set timeout for connection
+                client_socket.settimeout(5)  
+                #connect to worker node
                 client_socket.connect(address)
+                #prepare task data (function and arguments) for transmission
                 task_data = pickle.dumps((task, arguments))
+                #send all the task data to worker node
                 client_socket.sendall(task_data)
                 response = client_socket.recv(4096)
                 if response:
+                    #unpickle the result and append it to results list
                     result = pickle.loads(response)
                     results.append(result)
                 else:
